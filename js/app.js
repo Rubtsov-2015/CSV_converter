@@ -29,70 +29,41 @@ function csvConvert(form){
 	function csvCreate(textareaCsvString){
 		table = document.createElement('table'),
 		table.className = "csv_table";
-		console.log(parent);
-		parent.appendChild(table);
-		// console.log(textareaCsvString[0])
-		for(let i = 0; i < textareaCsvString.length; i++){
-			var timeLine = '';
-			if(textareaCsvString[i].charCodeAt() != 44 && textareaCsvString[i].charCodeAt() != 10){
-				timeLine += textareaCsvString[i];
-			}else if(textareaCsvString[i].charCodeAt() == 44){
 
+		parent.appendChild(table);
+		var SYMBOL_ENTER = 10,
+			SYMBOL_COMMA = 44,
+			timeLine = '';
+
+		parent.getElementsByTagName('td')[0];
+
+		createRow();
+		for(let i = 0; i < textareaCsvString.length; i++){
+			if(textareaCsvString[i].charCodeAt() != SYMBOL_COMMA && textareaCsvString[i].charCodeAt() != SYMBOL_ENTER){
+				timeLine = timeLine + textareaCsvString[i];
+			}else if(textareaCsvString[i].charCodeAt() == SYMBOL_COMMA){
+				createCol(timeLine);
+			}else if(textareaCsvString[i].charCodeAt() == SYMBOL_ENTER){
+				createRow();
 			}
 			console.log(textareaCsvString[i].charCodeAt() );
 		}
 
+		function createCol(line){
+			var td = document.createElement('td');
+			td.innerHTML = line;
 
+			timeLine = '';
+			var tablesTr = table.getElementsByTagName('tr');
+			var lastTr = tablesTr[tablesTr.length-1];;
+			lastTr.appendChild(td);
+		}
+		function createRow(){
+			var tr = document.createElement('tr');
+			table.appendChild(tr);
+		}
+		
+		function toArray(obj){ return [].slice.call(obj) }
 
-
-
-
-
-		// var cols = prompt("Введите количество строк", "");
-		// var rows = prompt("Введите количество столбцов", "");
-		// cols = parseInt(cols);
-		// rows = parseInt(rows);
-		// document.write(' <table border=1, cellpadding=0, cellspacing=0, width="500px">');
-		// for (i = 1; i <= cols; i++) {
-		//     document.write("<tr>"+rowscalc(rows)+"</tr>");
-		// }
-		// document.write("</table>");
-		 
-		// function rowscalc(r) {
-		//     for (k = 1; k <= r; k++) {
-		//         document.write("<td>"+k+"</td>");
-		//     }
-		// }
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var csvConvert = (function() {
-// 	'use strict';
-// 	return {
-// 		init: function(str) {
-// 			this.events = this.events.bind(this);
-// 			this.events();
-// 		},
-// 		events: function() {
-// 			console.log(str);
-// 		}
-// 	};
-// })();
-/* Call component init method. Note! This method should be placed
-before </body> tag. */
-// csvConvert.init('1');
